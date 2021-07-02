@@ -8,18 +8,12 @@ public class main {
 		// TODO Auto-generated method stub
 
 		// input given board here
-		int[][] board = { { 0,0,0, 0,0,9, 0,0,7 },
-						  { 0,3,0, 1,0,2, 6,4,9 }, 
-						  { 0,0,0, 0,5,0, 1,0,0 },
+		int[][] board = { { 0, 0, 0, 0, 0, 9, 0, 0, 7 }, { 0, 3, 0, 1, 0, 2, 6, 4, 9 }, { 0, 0, 0, 0, 5, 0, 1, 0, 0 },
 
-			              { 0,5,0, 0,7,0, 4,0,0 }, 
-			              { 2,0,0, 0,0,6, 0,0,0 }, 
-			              { 1,0,8, 0,0,0, 0,6,0 },
+				{ 0, 5, 0, 0, 7, 0, 4, 0, 0 }, { 2, 0, 0, 0, 0, 6, 0, 0, 0 }, { 1, 0, 8, 0, 0, 0, 0, 6, 0 },
 
-				          { 0,0,0, 0,0,0, 8,3,0 }, 
-				          { 7,1,0, 0,0,8, 0,0,2 }, 
-				          { 0,0,9, 0,0,0, 0,0,0 } };
- 
+				{ 0, 0, 0, 0, 0, 0, 8, 3, 0 }, { 7, 1, 0, 0, 0, 8, 0, 0, 2 }, { 0, 0, 9, 0, 0, 0, 0, 0, 0 } };
+
 		// check validity of input
 		if (hasRowDuplicates(board) == true) {
 			System.out.println("Invalid input, duplicate in a row.");
@@ -40,7 +34,6 @@ public class main {
 
 	}
 
-	
 	static void display(int[][] board) {
 
 		String printableBoard = new String();
@@ -76,7 +69,7 @@ public class main {
 		for (int row = 0; row < board[0].length; row++) {
 			for (int col = 0; col < board.length; col++) {
 
-				try { 
+				try {
 
 					if (board[row][col] == 0) {
 						// do nothing
@@ -85,11 +78,11 @@ public class main {
 					} else {
 						valueExists[board[row][col]] = true;
 					}
-				} 
+				}
 
-				catch (IndexOutOfBoundsException e) { 
-					System.out.println("error: index out of bounds exception!"); 
-				} 
+				catch (IndexOutOfBoundsException e) {
+					System.out.println("error: index out of bounds exception!");
+				}
 
 			}
 			Arrays.fill(valueExists, false);
@@ -97,8 +90,6 @@ public class main {
 		return false;
 	}
 
-	
-	
 	static boolean hasColumnDuplicates(int[][] board) {
 		// check for duplicates in columns
 
@@ -120,8 +111,6 @@ public class main {
 		return false;
 	}
 
-	
-	
 	static boolean hasFamilyDuplicates(int[][] board) {
 		// check for duplicates within each 3x3 family
 
@@ -135,7 +124,8 @@ public class main {
 					for (int colRemainder = 0; colRemainder <= 2; colRemainder++) {
 						if (board[rowSection * 3 + rowRemainder][colSection * 3 + colRemainder] == 0) {
 							// do nothing
-						} else if (valueExists[board[rowSection * 3 + rowRemainder][colSection * 3 + colRemainder]] == true) {
+						} else if (valueExists[board[rowSection * 3 + rowRemainder][colSection * 3
+								+ colRemainder]] == true) {
 							return true;
 						} else {
 							valueExists[board[rowSection * 3 + rowRemainder][colSection * 3 + colRemainder]] = true;
@@ -148,8 +138,6 @@ public class main {
 		return false;
 	}
 
-	
-	
 	// solve using backtracking algorithm
 	static int[][] backtrackingMethod(int[][] board) {
 
@@ -158,26 +146,23 @@ public class main {
 			Arrays.fill(row, false);
 		}
 
-		for (int row = 0; row < board.length; row++) { 
-			for (int col = 0; col < board.length; col++) { 
+		for (int row = 0; row < board.length; row++) {
+			for (int col = 0; col < board.length; col++) {
 				if (board[row][col] != 0) {
 					isGiven[row][col] = true; // set all given values to true
 				}
 			}
 		}
 
-
 		for (int row = 0; row < board.length; row++) {
 			for (int col = 0; col < board.length; col++) {
 				if (isGiven[row][col] == true) {
 					// do nothing
 				} else {
-					while (board[row][col] <= 9) { 
+					while (board[row][col] <= 9) {
 						board[row][col] = board[row][col] + 1;
 
-						display(board); 
-
-					
+						display(board);
 
 						if (board[row][col] > 9) { // if value is 10, backtrack
 							board[row][col] = 0;
@@ -198,7 +183,7 @@ public class main {
 								}
 							}
 
-							if (col == 0) {  // go back one extra cell
+							if (col == 0) { // go back one extra cell
 								--row;
 								col = board.length - 1;
 							} else {
@@ -207,49 +192,46 @@ public class main {
 
 							break;
 						}
-							
-						
 
-							if (hasRowDuplicates(board) == false && hasColumnDuplicates(board) == false && hasFamilyDuplicates(board) == false) {
-								break; // do nothing, this value is valid, leave while loop
-							}
-
-							else if (board[row][col] >= 9) { // if value is 9 and not valid, reset to 0 and backtrack
-								board[row][col] = 0;
-								if (col == 0) {
-									--row;
-									col = board.length - 1;
-								} else {
-									--col;
-								}
-
-								while (isGiven[row][col] == true) { // go back to last changeable cell
-									if (col == 0) {
-										--row;
-										col = board.length - 1;
-									} else {
-										--col;
-									}
-								}
-
-								if (col == 0) {
-									--row;
-									col = board.length - 1;
-								} else {
-									--col;
-								}
-
-								break;
-
-							}
+						if (hasRowDuplicates(board) == false && hasColumnDuplicates(board) == false
+								&& hasFamilyDuplicates(board) == false) {
+							break; // do nothing, this value is valid, leave while loop
 						}
 
-					}
-				}
+						else if (board[row][col] >= 9) { // if value is 9 and not valid, reset to 0 and backtrack
+							board[row][col] = 0;
+							if (col == 0) {
+								--row;
+								col = board.length - 1;
+							} else {
+								--col;
+							}
 
+							while (isGiven[row][col] == true) { // go back to last changeable cell
+								if (col == 0) {
+									--row;
+									col = board.length - 1;
+								} else {
+									--col;
+								}
+							}
+
+							if (col == 0) {
+								--row;
+								col = board.length - 1;
+							} else {
+								--col;
+							}
+
+							break;
+
+						}
+					}
+
+				}
 			}
 
-		
+		}
 
 		return board;
 
