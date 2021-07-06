@@ -5,7 +5,6 @@ import java.util.Arrays;
 public class main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		// input given board here
 		int[][] board = { { 0, 0, 0, 0, 0, 9, 0, 0, 7 }, { 0, 3, 0, 1, 0, 2, 6, 4, 9 }, { 0, 0, 0, 0, 5, 0, 1, 0, 0 },
@@ -140,8 +139,8 @@ public class main {
 
 	// solve using backtracking algorithm
 	static int[][] backtrackingMethod(int[][] board) {
-
 		boolean[][] isGiven = new boolean[board.length][board.length];
+
 		for (boolean[] row : isGiven) {
 			Arrays.fill(row, false);
 		}
