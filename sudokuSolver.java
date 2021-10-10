@@ -1,4 +1,3 @@
-package sudoku;
 
 import java.util.Arrays;
 
@@ -28,6 +27,7 @@ public class sudokuSolver {
 
 		int[][] solvedBoard = backtrackingMethod(board);
 
+		System.out.println("Found a solution!");
 		display(solvedBoard);
 
 	}
